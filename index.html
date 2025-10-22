@@ -189,6 +189,29 @@
             font-size: 0.9em;
             color: #666;
             text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .boleto-type-hint {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            display: none;
+        }
+
+        .boleto-type-hint.arrecadacao {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .boleto-type-hint.bancario {
+            background: #e8f5e8;
+            color: #2e7d32;
         }
 
         .btn-secondary {
@@ -339,6 +362,7 @@
                         <input type="text" id="barcode" name="barcode" placeholder="Digite o código de barras aqui..." maxlength="48">
                         <div class="digit-counter">
                             <span id="digitCount">0</span> dígitos
+                            <span id="boletoTypeHint" class="boleto-type-hint"></span>
                         </div>
                     </div>
                     
@@ -658,8 +682,26 @@
         function updateDigitCounter() {
             const input = document.getElementById('barcode');
             const digitCount = document.getElementById('digitCount');
+            const boletoTypeHint = document.getElementById('boletoTypeHint');
             const numericOnly = input.value.replace(/[^0-9]/g, '');
             digitCount.textContent = numericOnly.length;
+            
+            // Mostrar dica do tipo de boleto baseado no comprimento
+            if (numericOnly.length === 44) {
+                boletoTypeHint.textContent = 'Boleto Bancário';
+                boletoTypeHint.className = 'boleto-type-hint bancario';
+                boletoTypeHint.style.display = 'inline-block';
+            } else if (numericOnly.length === 47) {
+                boletoTypeHint.textContent = 'Boleto Bancário';
+                boletoTypeHint.className = 'boleto-type-hint bancario';
+                boletoTypeHint.style.display = 'inline-block';
+            } else if (numericOnly.length === 48) {
+                boletoTypeHint.textContent = 'Boleto Arrecadação';
+                boletoTypeHint.className = 'boleto-type-hint arrecadacao';
+                boletoTypeHint.style.display = 'inline-block';
+            } else {
+                boletoTypeHint.style.display = 'none';
+            }
         }
 
         // Inicializar contador
@@ -798,5 +840,5 @@
         // Carregar histórico ao inicializar
         updateHistoryDisplay();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992995812430f229',t:'MTc2MTE0MjI4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9929b1f8f1fc02f2',t:'MTc2MTE0MzQ1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
